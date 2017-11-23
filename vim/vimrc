@@ -1,0 +1,24 @@
+set backupdir=/root/.vim/backups
+set noswapfile
+set undodir=/root/.vim/undodir
+set noeb
+set novb
+
+set encoding=utf-8
+syntax enable
+set number
+set relativenumber
+set expandtab
+set shiftwidth=4
+set showmatch
+set autoindent
+set softtabstop=4
+
+call plug#begin('/root/.vim/plugger')
+
+Plug 'jiangmiao/auto-pairs'
+Plug 'chriskempson/base16-vim'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'tpope/vim-surround'
+
+call plug#end()
