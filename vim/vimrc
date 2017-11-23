@@ -1,8 +1,32 @@
-set backupdir=/root/.vim/backups
+
+" {BASE16SCHEME}
+colorscheme base16-tomorrow-night
+" {BASE16SCHEME}
+
+
+" Saves the folded items in the file
+
+autocmd BufWinLeave *.* mkview
+autocmd BufWinEnter *.* silent loadview
+
+
+set backupdir=~/.vim/backups
 set noswapfile
-set undodir=/root/.vim/undodir
+set undodir=~/.vim/undo
 set noeb
 set novb
+
+
+call plug#begin('~/.vim/plugged')
+
+    Plug 'jiangmiao/auto-pairs'
+    Plug 'chriskempson/base16-vim'
+    Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+    Plug 'tpope/vim-surround'
+    Plug 'junegunn/goyo.vim'
+    Plug 'junegunn/seoul256.vim'
+
+call plug#end()
 
 set encoding=utf-8
 syntax enable
@@ -14,11 +38,67 @@ set showmatch
 set autoindent
 set softtabstop=4
 
-call plug#begin('/root/.vim/plugger')
 
-Plug 'jiangmiao/auto-pairs'
-Plug 'chriskempson/base16-vim'
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'tpope/vim-surround'
+" Some remapping
 
-call plug#end()
+" Mapps , to command mode
+nnoremap , :
+
+" copies to clipboard
+" vnoremap <C-c> "*y
+
+" When selecting Text, keep Block selected
+vmap < <gv
+vmap > >gv
+
+
+" Remove Trailling Whitespaces
+" ----------------------------
+autocmd BufWritePre * :%s/\s\+$//e
+
+" NerdTree Configurations
+" -----------------------
+
+" Bin Toggle to F9
+map <F9> :NERDTreeToggle<CR>
+
+" Auto Open NERDTree when opening a directory
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+
+" Close NERDTree when closing last Window
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" Show Hidden Files
+let NERDTreeShowHidden=1
+
+let g:NERDTreeDirArrowExpandable = '>'
+let g:NERDTreeDirArrowCollapsible = '<'
+
+
+" Get Tabs by using the <leader> Key
+nmap <leader>1 1gt
+nmap <leader>2 2gt
+nmap <leader>3 3gt
+nmap <leader>4 4gt
+nmap <leader>5 5gt
+nmap <leader>6 6gt
+
+" Goyo - distraction free vim
+
+let g:goyo_width = 90
+let g:goyo_height = 90
+let g:goyo_linenr = 0
+
+" Run Goyo on start
+
+autocmd VimEnter * Goyo 80%x80%
+autocmd VimResized * Goyo 80%x80%
+
+" hide Toolbar, Menubar and right scrollbar in gvim
+set guioptions -=T
+set guioptions -=m
+set guioptions -=r
+
+" autoclose Goyo on VimExit
+autocmd! User GoyoLeave q!

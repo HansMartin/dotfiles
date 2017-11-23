@@ -1,0 +1,29 @@
+# some ls aliases
+alias ll='ls -al'
+alias la='ls -A'
+alias l='ls -CF'
+alias ls='ls -CF'
+
+
+# cd stuff
+alias ..='cd ..'
+alias ...='cd ..'
+
+# grap coloring
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+
+
+# show open ports
+alias ports='netstat -tulanp'
+
+
+alias update='sudo apt-get update'
+
+alias upgrade='sudo apt-get update && sudo apt-get dist-upgrade'
+
+
+# own tools
+alias color='/root/colorize/colorize.py'
+
+
