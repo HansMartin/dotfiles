@@ -1,9 +1,8 @@
 # some ls aliases
-alias ll='ls -al'
-alias la='ls -A'
-alias l='ls -CF'
-alias ls='ls -CF'
-
+alias ll='ls -al --color=auto'
+alias la='ls -A --color=auto'
+alias l='ls -CF --color=auto'
+alias ls='ls -CF --color=auto'
 
 # cd stuff
 alias ..='cd ..'
@@ -25,5 +24,11 @@ alias upgrade='sudo apt-get update && sudo apt-get dist-upgrade'
 
 # own tools
 alias color='/root/colorize/colorize.py'
+alias config='python /root/c0nfigure/c0nfigure.py'
 
+# it sec stuff
 
+# Disassemble using objdump
+disas() {
+    objdump -M intel -d $@
+}
