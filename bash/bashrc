@@ -114,6 +114,6 @@ PATH=~/Documents/bin:$PATH
 export PATH
 
 
-source ~/.config/ownBashStuff/newbar.sh
+source ~/.newbar.sh
 
 
