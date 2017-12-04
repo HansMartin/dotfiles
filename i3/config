@@ -1,27 +1,27 @@
 
 # 1d1f21
 # {BASE16SCHEME}
-## Base16 Tomorrow Night
-# Author: Chris Kempson (http://chriskempson.com)
+## Base16 Ashes
+# Author: Jannik Siebert (https://github.com/janniks)
 #
 # You can use these variables anywhere in the i3 configuration file.
 
-set $base00 #1d1f21
-set $base01 #282a2e
-set $base02 #373b41
-set $base03 #969896
-set $base04 #b4b7b4
-set $base05 #c5c8c6
-set $base06 #e0e0e0
-set $base07 #ffffff
-set $base08 #cc6666
-set $base09 #de935f
-set $base0A #f0c674
-set $base0B #b5bd68
-set $base0C #8abeb7
-set $base0D #81a2be
-set $base0E #b294bb
-set $base0F #a3685a
+set $base00 #1C2023
+set $base01 #393F45
+set $base02 #565E65
+set $base03 #747C84
+set $base04 #ADB3BA
+set $base05 #C7CCD1
+set $base06 #DFE2E5
+set $base07 #F3F4F5
+set $base08 #C7AE95
+set $base09 #C7C795
+set $base0A #AEC795
+set $base0B #95C7AE
+set $base0C #95AEC7
+set $base0D #AE95C7
+set $base0E #C795AE
+set $base0F #C79595
 
 # {BASE16SCHEME}
 
@@ -199,11 +199,11 @@ bindsym $mod+r mode "resize"
 bar {
         #i3bar_command i3blocks -c ~/.i3blocks.conf
 
-	status_command i3blocks -c ~/.config/i3/i3blocks.conf	
+	status_command i3blocks -c ~/.config/i3/i3blocks.conf
 	position top
         tray_output primary
 	colors {
-	
+
 
 		background $base00
 		separator  $base01
@@ -215,7 +215,7 @@ bar {
 		inactive_workspace  $base03 $base01 $base05
 		urgent_workspace    $base08 $base08 $base00
 		binding_mode $base00 $base0A $base00
-		
+
 	}
 
 }
