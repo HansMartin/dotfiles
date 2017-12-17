@@ -19,7 +19,7 @@ fi
 # apt-get install i3blocks --yes
 
 apt-get install feh --yes
-
+apt-get install rofi --yes
 
 
 # german keyboard Layout
