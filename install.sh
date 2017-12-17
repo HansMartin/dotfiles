@@ -14,9 +14,16 @@ then
     cp $1/vim/autoload/plug.vim ~/.vim/autoload
 fi
 
+# Installing packages
 
-# Installing i3blocks, currently using i3status
 # apt-get install i3blocks --yes
+
+apt-get install feh --yes
+
+
+
+# german keyboard Layout
+setxkbmap de
 
 
 echo "[*] ~> Change the xfce-default terminal Settings by hand!...."

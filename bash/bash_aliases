@@ -24,7 +24,7 @@ alias upgrade='sudo apt-get update && sudo apt-get dist-upgrade'
 
 # own tools
 alias color='/root/colorize/colorize.py'
-alias config='python /root/c0nfigure/c0nfigure.py'
+alias config='python /root/tools/c0nfigure/c0nfigure.py'
 
 # it sec stuff
 
