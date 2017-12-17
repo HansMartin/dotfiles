@@ -15,6 +15,10 @@ then
 fi
 
 
+# Installing i3blocks, currently using i3status
+# apt-get install i3blocks --yes
+
+
 echo "[*] ~> Change the xfce-default terminal Settings by hand!...."
 
 
