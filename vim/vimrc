@@ -1,4 +1,3 @@
-
 " {BASE16SCHEME}
 " colorscheme base16-ashes
 " {BASE16SCHEME}
@@ -92,8 +91,8 @@ let g:goyo_linenr = 0
 
 " Run Goyo on start
 
-autocmd VimEnter * Goyo 80%x80%
-autocmd VimResized * Goyo 80%x80%
+autocmd VimEnter * Goyo 90%x90%
+autocmd VimResized * Goyo 90%x90%
 
 " hide Toolbar, Menubar and right scrollbar in gvim
 set guioptions -=T
