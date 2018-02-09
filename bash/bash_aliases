@@ -27,6 +27,7 @@ alias color='/root/colorize/colorize.py'
 alias config='python /root/tools/c0nfigure/c0nfigure.py'
 alias cheat='python /root/tools/cheat/cheat.py'
 
+alias python="python3.6"
 
 # it sec stuff
 
