@@ -54,8 +54,8 @@ floating_modifier $mod
 #bindsym $mod+Return exec i3-sensible-terminal
 
 # My Terminal
-bindsym $mod+Return exec xfce4-terminal #gnome-terminal --window-with-profile=noScrollbar --hide-menubar
-
+#bindsym $mod+Return exec xfce4-terminal #gnome-terminal --window-with-profile=noScrollbar --hide-menubar
+bindsym $mod+Return exec urxvt
 
 # kill focused window ( without shift)
 bindsym $mod+q kill
