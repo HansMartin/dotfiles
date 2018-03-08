@@ -20,12 +20,13 @@ fi
 
 apt-get install feh --yes
 apt-get install rofi --yes
-
+apt-get install fish
+apt-get install rxvt-unicode-256color --yes
+apt-get install arc-theme
 
 # german keyboard Layout
 setxkbmap de
 
 
-echo "[*] ~> Change the xfce-default terminal Settings by hand!...."
 
 
