@@ -23,6 +23,11 @@ apt-get install rofi --yes
 apt-get install fish
 apt-get install rxvt-unicode-256color --yes
 apt-get install arc-theme
+apt-get install neofetch --yes
+apt-get install python3-pip --yes
+apt-get install python2-pip --yes
+apt-get install w3m-img
+
 
 # german keyboard Layout
 setxkbmap de

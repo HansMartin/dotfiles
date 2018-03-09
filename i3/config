@@ -55,14 +55,15 @@ floating_modifier $mod
 
 # My Terminal
 #bindsym $mod+Return exec xfce4-terminal #gnome-terminal --window-with-profile=noScrollbar --hide-menubar
-bindsym $mod+Return exec urxvt
+bindsym $mod+Return exec urxvt -e /usr/bin/fish
 
 # kill focused window ( without shift)
 bindsym $mod+q kill
 
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec rofi -show run #dmenu_run
+bindsym $mod+d exec rofi -theme "gruvbox-dark" -show run #dmenu_run
+bindsym $mod+Tab exec rofi -theme "gruvbox-dark" -show window #dmenu_run
 
 
 # There also is the (new) i3-dmenu-desktop which only displays applications
@@ -244,5 +245,5 @@ client.background $base07
 
 
 exec_always compton
-exec_always feh --bg-fill ~/Pictures/bridge.jpg
+exec_always fish -c "feh --bg-fill (random choice $HOME/Bilder/wallpapers/*.jpg)"
 exec start-pulseaudio-x11
