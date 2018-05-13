@@ -1,83 +1,118 @@
-" Saves the folded items in the file
+" +-------------------------+ "
+" |     VIM Config File     |
+" +-------------------------+ "
 
-autocmd BufWinLeave *.* mkview
-autocmd BufWinEnter *.* silent loadview
+
+" Menu:
+" 1...................Plugins
+" 2....................Basics
+" 3................Remappings
+" 3.......................GUI
+" 4.....................Fonts
+" 5....................Panels
+" 6................MS Windows
 
 
-set backupdir=~/.vim/backups
-set noswapfile
-set undodir=~/.vim/undo
-set noeb
-set novb
 
+" -----[ PLUGINS ]----- "
 
 call plug#begin('~/.vim/plugged')
-
-    Plug 'jiangmiao/auto-pairs'
-    Plug 'chriskempson/base16-vim'
-    Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-    Plug 'tpope/vim-surround'
-    Plug 'junegunn/goyo.vim'
-    Plug 'junegunn/seoul256.vim'
-
+    Plug 'chriskempson/base16-vim'                          " Best Colors Ever!
+    Plug 'tpope/vim-surround'                               " surround keybindings
+    Plug 'junegunn/seoul256.vim'                            " seoul colorscheme
+    Plug 'HansMartin/vim-plugin-random-colorscheme-picker'  " random  colorschme
+    Plug 'ctrlpvim/ctrlp.vim'                               " fuzzy finder for files/buffers ..
+    Plug 'ervandew/supertab'                                " tabcompletion
+    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }      " Golang Vim Plugin
 call plug#end()
 
-" {BASE16SCHEME}
-colorscheme base16-ashes
-" {BASE16SCHEME}
-syntax enable
+
+
+" -----[ BASICS ]----- "
+
+" Color - same color in the beginning
+colorscheme seoul256
+
+" Encoding
 set encoding=utf-8
+
+" disable any (terminal-)bells
+set noeb
+set novb
+set belloff=all
+
+" Path settings
+set backupdir=$HOME/.vim/backups
+set noswapfile
+set undodir=$HOME/.vim/undo
+
+" Syntax and Lines
+syntax enable
 set number
 set relativenumber
-set shiftwidth=4
-set showmatch
-set autoindent
-set tabstop=4
-set expandtab
-set softtabstop=4
-set wildmenu
-"set cursorline
-set incsearch
-set hlsearch
+set cursorline
 
-" Some remapping
+" Tab/Spacing settings
+set expandtab           " use spaces instead of tabs
+set shiftwidth=4        " number of columns when indenting with > or <
+set softtabstop=4       " number of spaces when hitting tab
+set autoindent          " set indentation from previous line
 
-" Mapps , to command mode
-nnoremap , :
+" searching...
+set ignorecase          " case insensitive
+set nohlsearch          " no search highlighting after the search is done
+set noshowmatch         " disable that blinking bracket stuff
+set wildmenu            " shows menu for tab completion
+set incsearch           " search if you type the letters
 
-" copies to clipboard
-" vnoremap <C-c> "*y
 
-" When selecting Text, keep Block selected
+
+" -----[ Remappings ]----- "
+
+nnoremap , :            " remap comma to new colon
+
+" When selecting Text, keep the Block selected
 vmap < <gv
 vmap > >gv
 
-
 " Remove Trailling Whitespaces
-" ----------------------------
 autocmd BufWritePre * :%s/\s\+$//e
 
-" NerdTree Configurations
-" -----------------------
-
-" Bin Toggle to F9
-map <F9> :NERDTreeToggle<CR>
-
-" Auto Open NERDTree when opening a directory
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-
-" Close NERDTree when closing last Window
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" Show Hidden Files
-let NERDTreeShowHidden=1
-
-let g:NERDTreeDirArrowExpandable = '>'
-let g:NERDTreeDirArrowCollapsible = '<'
 
 
-" Get Tabs by using the <leader> Key
+" -----[ GUI ]----- "
+
+" This hides the Toolbar, Menubar and left/right scrollbar in gvim
+set guioptions -=T
+set guioptions -=m
+set guioptions -=r
+set guioptions -=L
+
+
+
+" -----[ Fonts ]----- "
+if has("gui_running")
+    if has("gui_gtk2")
+        set guifont=Hack\ 10
+    elseif has("gui_macvim")
+        set guifont=Menlo\ Regular:h14
+    elseif has("gui_win32")
+        set guifont=Consolas:h11:cANSI
+    endif
+endif
+
+
+
+" -----[ Panels ]----- "
+
+" This remaps Ctrl+W +<direction> to Ctr+HJKL for changig the Panel in a
+" splitted mode
+map <C-h> <C-W>h
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-l> <C-W>l
+
+" This is to get Tabs by using the <leader> Key (Leader Key: '\')
 nmap <leader>1 1gt
 nmap <leader>2 2gt
 nmap <leader>3 3gt
@@ -85,24 +120,12 @@ nmap <leader>4 4gt
 nmap <leader>5 5gt
 nmap <leader>6 6gt
 
-" Goyo - distraction free vim
-
-let g:goyo_width = 90
-let g:goyo_height = 90
-let g:goyo_linenr = 0
-
-" Run Goyo on start
-
-autocmd VimEnter * Goyo 90%x90%
-autocmd VimResized * Goyo 90%x90%
-
-" autoclose Goyo on VimExit
-autocmd! User GoyoLeave q!
 
 
-" hide Toolbar, Menubar and right scrollbar in gvim
-set guioptions -=T
-set guioptions -=m
-set guioptions -=r
-set guioptions -=L
+" -----[ MS Windows ]----- "
 
+" Getting the Windows mswin behaviour
+if has("win32")
+    source $VIMRUNTIME/mswin.vim
+    behave mswin
+endif
