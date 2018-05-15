@@ -8,9 +8,10 @@
 " 2....................Basics
 " 3................Remappings
 " 3.......................GUI
-" 4.....................Fonts
-" 5....................Panels
-" 6................MS Windows
+" 4................Statusline
+" 5.....................Fonts
+" 6....................Panels
+" 7................MS Windows
 
 
 
@@ -23,7 +24,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'HansMartin/vim-plugin-random-colorscheme-picker'  " random  colorschme
     Plug 'ctrlpvim/ctrlp.vim'                               " fuzzy finder for files/buffers ..
     Plug 'ervandew/supertab'                                " tabcompletion
-    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }      " Golang Vim Plugin
 call plug#end()
 
 
@@ -87,17 +87,30 @@ set guioptions -=T
 set guioptions -=m
 set guioptions -=r
 set guioptions -=L
+set termguicolors       " use guicolors in terminal vim
 
+
+" -----[ Statusline ]----- "
+set statusline=
+set statusline+=%#PmenuSel#
+set statusline+=%#LineNr#
+set statusline+=\ %f
+set statusline+=%m
+set statusline+=%=
+set statusline+=%#CursorColumn#
+set statusline+=\ %p%%
+set statusline+=\ %l:%c
+set laststatus=2
 
 
 " -----[ Fonts ]----- "
 if has("gui_running")
     if has("gui_gtk2")
-        set guifont=Hack\ 10
+        set guifont=Hack\ 9
     elseif has("gui_macvim")
         set guifont=Menlo\ Regular:h14
     elseif has("gui_win32")
-        set guifont=Consolas:h11:cANSI
+        set guifont=Hack:h9:cANSI,Consolas:h11:cANSI
     endif
 endif
 
