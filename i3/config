@@ -1,81 +1,95 @@
+###########################
+#   i3-gaps config file   #
+###########################
 
-# 1d1f21
-# {BASE16SCHEME}
-## Base16 Ashes
-# Author: Jannik Siebert (https://github.com/janniks)
-#
-# You can use these variables anywhere in the i3 configuration file.
+# 1..................Colors
+# 2...............Variables
+# 3.........Gaps n' Borders
+# 4................Bindings
+# 5..............Workspaces
+# 6.....................Bar
+# 7.................Runtime
 
-set $base00 #1C2023
-set $base01 #393F45
-set $base02 #565E65
-set $base03 #747C84
-set $base04 #ADB3BA
-set $base05 #C7CCD1
-set $base06 #DFE2E5
-set $base07 #F3F4F5
-set $base08 #C7AE95
-set $base09 #C7C795
-set $base0A #AEC795
-set $base0B #95C7AE
-set $base0C #95AEC7
-set $base0D #AE95C7
-set $base0E #C795AE
-set $base0F #C79595
 
-# {BASE16SCHEME}
+# -----[ Colors ]----- #
 
-#set Mode to Alt-Key
+# load color configuration from Xresource file
+set_from_resource $base00 i3wm.Base00 #292d3e
+set_from_resource $base01 i3wm.Base01 #444267
+set_from_resource $base02 i3wm.Base02 #32374d
+set_from_resource $base03 i3wm.Base03 #676e95
+set_from_resource $base04 i3wm.Base04 #8796b0
+set_from_resource $base05 i3wm.Base05 #959dcb
+set_from_resource $base06 i3wm.Base06 #959dcb
+set_from_resource $base07 i3wm.Base07 #ffffff
+set_from_resource $base08 i3wm.Base08 #f07178
+set_from_resource $base09 i3wm.Base09 #f78c6c
+set_from_resource $base0A i3wm.Base0A #ffcb6b
+set_from_resource $base0B i3wm.Base0B #c3e88d
+set_from_resource $base0C i3wm.Base0C #89ddff
+set_from_resource $base0D i3wm.Base0D #82aaff
+set_from_resource $base0E i3wm.Base0E #c792ea
+set_from_resource $base0F i3wm.Base0F #ff5370
+
+
+
+# -----[ Variables ]----- #
+
+# Modifier Keys (alt & win)
 set $mod Mod1
 set $win Mod4
 
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-font pango:monospace 8
+# Terminal
+set $terminal "xfce4-terminal -e /usr/bin/fish --hide-menubar --hide-scrollbar --font='Hack 10'"
+
+set $file_browser "xfce4-terminal --hide-menubar --hide-scrollbar --font='Hack 10' -e ranger --title='ranger'"
+
+# Font (window title, bar)
+font pango:Hack 8
 
 
 
-## Own Stuff ##
+# -----[ Gaps<3 and Borders ]----- #
 
-# Gaps <3
-
+# Inner Gapsize (in px)
 gaps inner 10
+# Outer Gapsize (in px)
 gaps outer 0
 
-# Border Style
-
+# Border width (in px)
 new_window pixel 1
 
+
+
+# -----[ Bindings ]----- #
+
+bindsym $mod+y exec --no-startup-id "$HOME/scripts/video.fish"
 
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# start a terminal
-#bindsym $mod+Return exec i3-sensible-terminal
-
-# My Terminal
-bindsym $mod+Return exec xfce4-terminal
-#bindsym $mod+Return exec urxvt -e /usr/bin/fish
+# Execute terminal
+bindsym $mod+Return exec $terminal
 
 # kill focused window ( without shift)
 bindsym $mod+q kill
 
+# Scratchpad bindings
+# make a terminal a scratchpad window
+bindsym $mod+t move scratchpad
+# show scratchpad
+bindsym $mod+s scratchpad show
 
-# start dmenu (a program launcher)
-#bindsym $mod+d exec dmenu_run #rofi -show run
-bindsym $mod+d exec rofi -theme "gruvbox-dark" -show run #dmenu_run
-bindsym $mod+Tab exec rofi -theme "gruvbox-dark" -show window #dmenu_run
+# Program launcher and Window switcher
+bindsym $mod+d exec rofi -theme "default" -show run
+bindsym $mod+Tab exec rofi -theme "default" -show window
 
-bindsym $win+e exec xfce4-terminal -e ranger
-bindsym $win+Shift+e exec nautilus
 
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+# Use win+e as filemanager shortcut (using ranger)
+bindsym $win+e exec $file_browser
 
-# change focus
+# change focus (vim bindings)
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
@@ -99,21 +113,16 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# split in horizontal orientation
-# bindsym $mod+h split h # now $mod+c
-
-# split in vertical orientation
+# split in vertical and horizontal orientation
 bindsym $mod+v split v
 bindsym $mod+c split h
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
-# change container layout (stacked, tabbed, toggle split)
-#bindsym $mod+s layout tabbed
+# change container layout (stacked, toggle split)
 bindsym $mod+w layout stacking
 bindsym $mod+e layout toggle split
-
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -121,15 +130,54 @@ bindsym $mod+Shift+space floating toggle
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
-# focus the parent container
+# focus the parent container, rarely used (rebind?)
 bindsym $mod+a focus parent
 
-# focus the child container
-#bindsym $mod+d focus child
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+
+# Mucho grande resizerino
+# Use zuio bindings for resizing on the fly
+bindsym $mod+Shift+z  resize shrink width 10 px or 10 ppt
+bindsym $mod+Shift+u resize grow height 10 px or 10 ppt
+bindsym $mod+Shift+i resize shrink height 10 px or 10 ppt
+bindsym $mod+Shift+o resize grow width 10 px or 10 ppt
+
+# oldschool resize mode!
+bindsym $mod+r mode "resize"
+
+# These bindings trigger as soon as you enter the resize mode
+mode "resize" {
+
+        # resizing using vim bindings
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
 
 
 
-# Workspace Strings
+# -----[ Workspaces ]----- #
+
+# Workspace Strings (only numbers, no unicoderino)
 set $ws1  "1"
 set $ws2  "2"
 set $ws3  "3"
@@ -139,8 +187,7 @@ set $ws6  "6"
 set $ws7  "7"
 set $ws8  "8"
 set $ws9  "9"
-set $ws10  "10: "
-
+set $ws10 "10"
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -166,79 +213,32 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
-# reload the configuration file
-bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 
+# -----[ Bar ]----- #
 
-# resize Window on the fly
-#
-
-bindsym $mod+Shift+z  resize shrink width 10 px or 10 ppt
-bindsym $mod+Shift+u resize grow height 10 px or 10 ppt
-bindsym $mod+Shift+i resize shrink height 10 px or 10 ppt
-bindsym $mod+Shift+o resize grow width 10 px or 10 ppt
-
-# resize window (you can also use the mouse for that)
-mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
-
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym h resize shrink width 10 px or 10 ppt
-        bindsym j resize grow height 10 px or 10 ppt
-        bindsym k resize shrink height 10 px or 10 ppt
-        bindsym l resize grow width 10 px or 10 ppt
-
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
-
-        # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-
-bindsym $mod+r mode "resize"
-
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
+# Start i3bar to display a workspace bar (plus the system information from i3status)
 bar {
-
-	status_command i3status #i3blocks -c ~/.config/i3/i3blocks.conf
+        # default status string
+	status_command i3status
 	position top
         tray_output primary
+
+        # Base16 colors
 	colors {
-
-
 		background $base00
 		separator  $base01
                     statusline $base04
-
                     # State             Border  BG      Text
                     focused_workspace   $base05 $base0D $base00
                     active_workspace    $base05 $base03 $base00
                     inactive_workspace  $base03 $base01 $base05
                     urgent_workspace    $base08 $base08 $base00
                     binding_mode $base00 $base0A $base00
-
             }
-
     }
 
-
-
-    # Colors #
-
-    # Basic color configuration using the Base16 variables for windows and borders.
+    # Colors of the Windows - using base16
     # Property Name         Border  BG      Text    Indicator Child Border
     client.focused          $base05 $base0D $base00 $base0D $base0D
     client.focused_inactive $base01 $base01 $base05 $base03 $base01
@@ -249,6 +249,16 @@ bar {
 
 
 
-    exec_always compton
-    exec_always fish -c "feh --bg-fill (random choice $HOME/Bilder/wallpapers/*.jpg)"
-    exec start-pulseaudio-x11
+# -----[ Windows ]----- #
+
+for_window [title="ranger"] floating enable
+
+
+
+# -----[ Runtime ]----- #
+
+# randomly changing the Wallpaper
+exec_always fish -c "feh --bg-fill (random choice $HOME/Bilder/wallpapers/*.jpg)"
+
+# audio driver
+exec start-pulseaudio-x11

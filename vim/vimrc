@@ -21,7 +21,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'chriskempson/base16-vim'                          " Best Colors Ever!
     Plug 'tpope/vim-surround'                               " surround keybindings
     Plug 'junegunn/seoul256.vim'                            " seoul colorscheme
-    Plug 'HansMartin/vim-plugin-random-colorscheme-picker'  " random  colorschme
+"    Plug 'HansMartin/vim-plugin-random-colorscheme-picker'  " random  colorschme
     Plug 'ctrlpvim/ctrlp.vim'                               " fuzzy finder for files/buffers ..
     Plug 'ervandew/supertab'                                " tabcompletion
 call plug#end()
@@ -31,7 +31,7 @@ call plug#end()
 " -----[ BASICS ]----- "
 
 " Color - same color in the beginning
-colorscheme seoul256
+colorscheme base16-tomorrow-night
 
 " Encoding
 set encoding=utf-8
@@ -53,23 +53,26 @@ set relativenumber
 set cursorline
 
 " Tab/Spacing settings
-set expandtab           " use spaces instead of tabs
-set shiftwidth=4        " number of columns when indenting with > or <
-set softtabstop=4       " number of spaces when hitting tab
-set autoindent          " set indentation from previous line
+set expandtab               " use spaces instead of tabs
+set shiftwidth=4            " number of columns when indenting with > or <
+set softtabstop=4           " number of spaces when hitting tab
+set autoindent              " set indentation from previous line
 
 " searching...
-set ignorecase          " case insensitive
-set nohlsearch          " no search highlighting after the search is done
-set noshowmatch         " disable that blinking bracket stuff
-set wildmenu            " shows menu for tab completion
-set incsearch           " search if you type the letters
-
+set ignorecase              " case insensitive
+set nohlsearch              " no search highlighting after the search is done
+set noshowmatch             " disable that blinking bracket stuff
+set wildmenu                " shows menu for tab completion
+set incsearch               " search if you type the letters
+set path+=**                " include all subdirs for finding files (eg. :find)
+set backspace=2
 
 
 " -----[ Remappings ]----- "
 
-nnoremap , :            " remap comma to new colon
+" mapping for fast buffer switching
+nnoremap <leader>a :bp!<CR>
+noremap <leader>s :bn!<CR>
 
 " When selecting Text, keep the Block selected
 vmap < <gv
@@ -78,15 +81,19 @@ vmap > >gv
 " Remove Trailling Whitespaces
 autocmd BufWritePre * :%s/\s\+$//e
 
-
+" use Ctr+C & Ctr+V for Copy Pastarino
+vnoremap <C-c> "+ty
+map <C-p> "+p
 
 " -----[ GUI ]----- "
 
 " This hides the Toolbar, Menubar and left/right scrollbar in gvim
-set guioptions -=T
-set guioptions -=m
-set guioptions -=r
-set guioptions -=L
+if has("gui_running")
+    set guioptions -=T
+    set guioptions -=m
+    set guioptions -=r
+    set guioptions -=L
+endif
 set termguicolors       " use guicolors in terminal vim
 
 

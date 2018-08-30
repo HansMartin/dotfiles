@@ -118,3 +118,4 @@ export PATH
 
 source ~/.newbar.sh
 setxkbmap de
+set -o vi
