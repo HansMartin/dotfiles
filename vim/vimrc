@@ -18,19 +18,22 @@
 " -----[ PLUGINS ]----- "
 
 call plug#begin('~/.vim/plugged')
-    Plug 'chriskempson/base16-vim'                          " Best Colors Ever!
+   Plug 'chriskempson/base16-vim'                          " Best Colors Ever!
     Plug 'tpope/vim-surround'                               " surround keybindings
     Plug 'junegunn/seoul256.vim'                            " seoul colorscheme
-"    Plug 'HansMartin/vim-plugin-random-colorscheme-picker'  " random  colorschme
     Plug 'ctrlpvim/ctrlp.vim'                               " fuzzy finder for files/buffers ..
     Plug 'ervandew/supertab'                                " tabcompletion
+    Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }  " latex compile and preview
+    Plug 'junegunn/goyo.vim'                                " Goyo, distraction free writing for LaTeX
 call plug#end()
 
 
 
 " -----[ BASICS ]----- "
 
-" Color - same color in the beginning
+" Color Settings
+let base16colorspace=256
+set t_Co=256
 colorscheme base16-tomorrow-night
 
 " Encoding
@@ -85,6 +88,45 @@ autocmd BufWritePre * :%s/\s\+$//e
 vnoremap <C-c> "+ty
 map <C-p> "+p
 
+" LaTeX Settings
+" let g:livepreview_previewer = 'mupdf'
+
+
+" Bind Goyo to shortcut
+map <F3> :Goyo<CR>
+
+
+" --- LaTeX Mappings ---
+
+" Navigating with guides
+autocmd FileType tex inoremap <Space><Tab> <Esc>/<++><Enter>"_c4l
+autocmd FileType tex vnoremap <Space><Tab> <Esc>/<++><Enter>"_c4l
+autocmd FileType tex nnoremap <Space><Tab> <Esc>/<++><Enter>"_c4l
+
+" Compile document using xelatex:
+autocmd FileType tex inoremap <F5> <Esc>:!pdflatex<space><c-r>%<Enter>a
+autocmd FileType tex nnoremap <F5> :!pdflatex<space><c-r>%<Enter>
+
+
+" Shortcuts
+autocmd FileType tex inoremap ,em \emph{}<Space><++><Esc>T{i
+autocmd FileType tex inoremap ,bf \textbf{}<Space><++><Esc>T{i
+autocmd FileType tex vnoremap , <ESC>`<i\{<ESC>`>2la}<ESC>?\\{<Enter>a
+autocmd FileType tex inoremap ,it \textit{}<Space><++><Esc>T{i
+autocmd FileType tex inoremap ,ol \begin{enumerate}<Enter><Enter>\end{enumerate}<Enter><Enter><++><Esc>3kA\item<Space>
+autocmd FileType tex inoremap ,ul \begin{itemize}<Enter><Enter>\end{itemize}<Enter><Enter><++><Esc>3kA\item<Space>
+autocmd FileType tex inoremap ,li <Enter>\item<Space>
+autocmd FileType tex inoremap ,ref \ref{}<Space><++><Esc>T{i
+autocmd FileType tex inoremap ,tab \begin{tabular}<Enter><++><Enter>\end{tabular}<Enter><Enter><++><Esc>4kA{}<Esc>i
+autocmd FileType tex inoremap ,sc \textsc{}<Space><++><Esc>T{i
+autocmd FileType tex inoremap ,chap \chapter{}<Enter><Enter><++><Esc>2kf}i
+autocmd FileType tex inoremap ,sec \section{}<Enter><Enter><++><Esc>2kf}i
+autocmd FileType tex inoremap ,ssec \subsection{}<Enter><Enter><++><Esc>2kf}i
+autocmd FileType tex inoremap ,sssec \subsubsection{}<Enter><Enter><++><Esc>2kf}i
+autocmd FileType tex inoremap ,col \begin{columns}[T]<Enter>\begin{column}{.5\textwidth}<Enter><Enter>\end{column}<Enter>\begin{column}{.5\textwidth}<Enter><++><Enter>\end{column}<Enter>\end{columns}<Esc>5kA
+
+
+
 " -----[ GUI ]----- "
 
 " This hides the Toolbar, Menubar and left/right scrollbar in gvim
@@ -94,7 +136,6 @@ if has("gui_running")
     set guioptions -=r
     set guioptions -=L
 endif
-set termguicolors       " use guicolors in terminal vim
 
 
 " -----[ Statusline ]----- "
