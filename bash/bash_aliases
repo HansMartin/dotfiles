@@ -10,6 +10,7 @@ alias ...='cd ../..'
 
 # grap coloring
 alias grep='grep --color=auto'
+alias grep='rg'
 alias egrep='egrep --color=auto'
 
 
@@ -17,20 +18,25 @@ alias egrep='egrep --color=auto'
 alias ports='netstat -tulanp'
 
 
-alias update='sudo apt-get update'
-
-alias upgrade='sudo apt-get update && sudo apt-get dist-upgrade'
+# package manager stuff
+alias update='sudo vpm sync'
+alias upgrade='sudo vpm update'
 
 
 # own tools
-alias color='python2.7 /root/colorize/colorize.py'
-alias config='python2.7 /root/tools/c0nfigure/c0nfigure.py'
 alias cheat='python /root/tools/cheat/cheat.py'
 
 alias python="python3.6"
+alias loadX='xrdb $HOME/.Xresources'
 
-alias loadX='xrdb ~/.Xresources'
+# cat on wings
+alias cat='bat'
 
+
+# brightness settings
+alias blow='xbacklight -set 10'
+alias bmed='xbacklight -set 45'
+alias bhi='xbacklight -set 90'
 
 # it sec stuff
 
