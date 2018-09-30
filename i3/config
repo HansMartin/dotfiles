@@ -40,19 +40,18 @@ set $mod Mod1
 set $win Mod4
 
 # Terminal
-set $terminal "xfce4-terminal -e /usr/bin/fish --hide-menubar --hide-scrollbar --font='Hack 10'"
+set $terminal "urxvt"
 
-set $file_browser "xfce4-terminal --hide-menubar --hide-scrollbar --font='Hack 10' -e ranger --title='ranger'"
+set $file_browser "urxvt -e ranger --title='ranger'"
 
 # Font (window title, bar)
-font pango:Hack 8
-
+font pango:monospace 8
 
 
 # -----[ Gaps<3 and Borders ]----- #
 
 # Inner Gapsize (in px)
-gaps inner 10
+gaps inner 15
 # Outer Gapsize (in px)
 gaps outer 0
 
@@ -63,8 +62,23 @@ new_window pixel 1
 
 # -----[ Bindings ]----- #
 
-bindsym $mod+y exec --no-startup-id "$HOME/scripts/video.fish"
+# Brightness Keys
+bindsym XF86MonBrightnessUp exec xbacklight +10
+bindsym XF86MonBrightnessDown exec xbacklight -10
 
+# Audio Keys
+bindsym XF86AudioRaiseVolume exec amixer -D pulse sset Master 5%+
+bindsym XF86AudioLowerVolume exec amixer -D pulse sset Master 5%-
+bindsym XF86AudioMute exec amixer -D pulse sset Master toggle
+
+bindsym XF86AudioPrev exec nop
+bindsym XF86AudioPlay exec nop
+bindsym XF86AudioNext exec nop
+
+
+
+
+bindsym $win+l exec $HOME/scripts/lock.sh # lock screen
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -82,8 +96,8 @@ bindsym $mod+t move scratchpad
 bindsym $mod+s scratchpad show
 
 # Program launcher and Window switcher
-bindsym $mod+d exec rofi -theme "default" -show run
-bindsym $mod+Tab exec rofi -theme "default" -show window
+bindsym $mod+d exec rofi -show run
+bindsym $mod+Tab exec rofi -show window
 
 
 # Use win+e as filemanager shortcut (using ranger)
@@ -220,7 +234,7 @@ bindsym $mod+Shift+0 move container to workspace 10
 # Start i3bar to display a workspace bar (plus the system information from i3status)
 bar {
         # default status string
-	status_command i3status
+	status_command i3blocks -c /etc/i3blocks.conf
 	position top
         tray_output primary
 
@@ -254,11 +268,10 @@ bar {
 for_window [title="ranger"] floating enable
 
 
-
 # -----[ Runtime ]----- #
 
-# randomly changing the Wallpaper
-exec_always fish -c "feh --bg-fill (random choice $HOME/Bilder/wallpapers/*.jpg)"
+# settings the wallpaper
+exec_always feh --bg-fill $HOME/pictures/wallpaper/train.jpg
+exec xautolock -locker ~/scripts/lock.sh -time 15
 
-# audio driver
-exec start-pulseaudio-x11
+
