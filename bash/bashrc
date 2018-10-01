@@ -3,6 +3,10 @@
 # If not running interactively, don't do anything
     [[ $- != *i* ]] && return
 
+
+shopt -s autocd # cd into directory only by dir name
+
+
 alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
