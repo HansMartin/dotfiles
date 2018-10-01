@@ -1,4 +1,8 @@
-# .bashrc
+#    _           _
+#   | |_ ___ ___| |_ ___ ___
+#   | . | .'|_ -|   |  _|  _|
+#   |___|__,|___|_|_|_| |___|
+#
 
 # If not running interactively, don't do anything
     [[ $- != *i* ]] && return
