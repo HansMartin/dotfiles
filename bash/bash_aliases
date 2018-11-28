@@ -14,13 +14,20 @@ alias ..='cd ..'
 alias ...='cd ../..'
 
 # grap coloring
-alias grep='grep --color=auto'
+alias grep='grep --color=auto -i'
 alias grep='rg'
 alias egrep='egrep --color=auto'
 
 
+# source: github.com/sharkdp/fd
+alias find='fd -H'
+
+# cat on wings
+alias cat='bat --theme zenburn'
+
 # show open ports
 alias ports='netstat -tulanp'
+alias netstat='netstat -tulanp'
 
 
 # package manager stuff
@@ -34,8 +41,6 @@ alias cheat='python /root/tools/cheat/cheat.py'
 alias python="python3.6"
 alias loadX='xrdb $HOME/.Xresources'
 
-# cat on wings
-alias cat='bat'
 
 
 # brightness settings

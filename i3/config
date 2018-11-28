@@ -1,17 +1,47 @@
-###########################
-#   i3-gaps config file   #
-###########################
+#  _ ___
+# |_|_  |___ ___ ___ ___ ___
+# | |_  |___| . | .'| . |_ -|
+# |_|___|   |_  |__,|  _|___|
+#           |___|   |_|
 
-# 1..................Colors
-# 2...............Variables
-# 3.........Gaps n' Borders
+# 1...............Variables
+# 2.........Gaps n' Borders
+# 3..................Colors
 # 4................Bindings
 # 5..............Workspaces
 # 6.....................Bar
 # 7.................Runtime
 
 
+
+# -----[ Variables ]----- #
+
+# Modifier Keys (alt & win)
+set $mod Mod1
+set $win Mod4
+
+# Terminal
+set $terminal "urxvt"
+
+set $file_browser "urxvt -title ranger -e /bin/bash -ic ranger"
+
+# Font (window title, bar)
+font pango:monospace 8
+
+
+# -----[ Gaps<3 and Borders ]----- #
+
+# Inner Gapsize (in px)
+gaps inner 20
+# Outer Gapsize (in px)
+gaps outer 0
+
+# Border width (in px)
+new_window pixel 1
+
+
 # -----[ Colors ]----- #
+#TODO get some fancy color script
 
 # load color configuration from Xresource file
 set_from_resource $base00 i3wm.Base00 #292d3e
@@ -32,34 +62,6 @@ set_from_resource $base0E i3wm.Base0E #c792ea
 set_from_resource $base0F i3wm.Base0F #ff5370
 
 
-
-# -----[ Variables ]----- #
-
-# Modifier Keys (alt & win)
-set $mod Mod1
-set $win Mod4
-
-# Terminal
-set $terminal "urxvt"
-
-set $file_browser "urxvt -e ranger --title='ranger'"
-
-# Font (window title, bar)
-font pango:monospace 8
-
-
-# -----[ Gaps<3 and Borders ]----- #
-
-# Inner Gapsize (in px)
-gaps inner 15
-# Outer Gapsize (in px)
-gaps outer 0
-
-# Border width (in px)
-new_window pixel 1
-
-
-
 # -----[ Bindings ]----- #
 
 # Brightness Keys
@@ -74,7 +76,6 @@ bindsym XF86AudioMute exec amixer -D pulse sset Master toggle
 bindsym XF86AudioPrev exec nop
 bindsym XF86AudioPlay exec nop
 bindsym XF86AudioNext exec nop
-
 
 
 
@@ -159,7 +160,7 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # Mucho grande resizerino
 # Use zuio bindings for resizing on the fly
-bindsym $mod+Shift+z  resize shrink width 10 px or 10 ppt
+bindsym $mod+Shift+y resize shrink width 10 px or 10 ppt
 bindsym $mod+Shift+u resize grow height 10 px or 10 ppt
 bindsym $mod+Shift+i resize shrink height 10 px or 10 ppt
 bindsym $mod+Shift+o resize grow width 10 px or 10 ppt
@@ -273,5 +274,4 @@ for_window [title="ranger"] floating enable
 # settings the wallpaper
 exec_always feh --bg-fill $HOME/pictures/wallpaper/train.jpg
 exec xautolock -locker ~/scripts/lock.sh -time 15
-
-
+exec setxkbmap us

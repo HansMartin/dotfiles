@@ -1,48 +1,23 @@
-*foreground: #00cc00
-*foreground_bold: #a8a19f
-*cursor: #a8a19f
-*background:       #1b1918
-!!*background: rgba(0, 0, 0, .7)
+! Xresources - mainly urxvt settings
 
-!! black
-*color0: #1b1918
-*color8: #766e6b
-!! red
-*color1: #f22c40
-*color9: #f22c40
-!! green
-*color2: #5ab738
-*color10: #5ab738
-!! yellow
-*color3: #d5911a
-*color11: #d5911a
-!! blue
-*color4: #407ee7
-*color12: #407ee7
-!! magenta
-*color5: #6666ea
-*color13: #6666ea
-!! cyan
-*color6: #00ad9c
-*color14: #00ad9c
-!! white
-*color7: #a8a19f
-*color15: #f1efee
+! URxvt
+URxvt.scrollBar: false
+URxvt.cursorUnderline: false
+URxvt.internalBorder: 10
 
-!! URxvt base config
-URxvt.perl-ext-common:      font-size eval
-URxvt.perl-ext:
-URxvt.font:                 xft:Hack:size=8
-URxvt.depth:                32
-URxvt.scrollBar:            false
-URxvt.internalBorder:       10
-URxvt.scrollTtyOutput:      false
-URxvt.scrollTtyKeypress:    true
-!! URxvt.intensityStyles:      false
+! Fonts
+URxvt.font:     xft:bitstream vera sans mono:size=14:antialias=true
+URxvt.boldFont: xft:bitstream vera sans mono:bold:size=14:antialias=true
+
+
+! Clickable URLs
+URxvt.perl-ext-common:default,matcher,font-size
+URxvt.url-launcher: firefox-nightly
+URxvt.matcher.button: 1
+
+! Use Control-Shift-V/C for X clipboard
 URxvt.iso14755: false
-
-
-!! Copy & Paste
-URxvt.keysym.Shift-Control-C: eval:copy_clipboard
 URxvt.keysym.Shift-Control-V: eval:paste_clipboard
+URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+
 
