@@ -7,8 +7,6 @@ package_man="apt "
 git_path="$HOME/documents/tools"
 
 
-
-
 install_git_pck () {
 
     base_name=$(echo $1 | awk -F/ '{print $9}')
@@ -119,13 +117,17 @@ update_pm() {
 
 # link all dotfiles to the home folder
 link_dots () {
-    ln -s $(pwd)/bash/bashrc $HOME/.bashrc 2> /dev/null
-    ln -s $(pwd)/bash/bash_aliases $HOME/.bash_aliases 2> /dev/null
-    ln -s $(pwd)/vim/vimrc $HOME/.vimrc 2> /dev/null
-    ln -s $(pwd)/home/Xresources $HOME/.Xresources 2> /dev/null
-    ln -s $(pwd)/i3/config $HOME/.config/i3/config 2> /dev/null
-    ln -s $(pwd)/tmux/tmux.conf $HOME/.tmux.confg 2> /dev/null
+    echo "[*] linking dots.."
+    ln -sb $(pwd)/bash/bashrc $HOME/.bashrc 2> /dev/null
+    ln -sb $(pwd)/bash/bash_aliases $HOME/.bash_aliases 2> /dev/null
+    ln -sb $(pwd)/vim/vimrc $HOME/.vimrc 2> /dev/null
+    ln -sb $(pwd)/home/Xresources $HOME/.Xresources 2> /dev/null
+    ln -sb $(pwd)/i3/config $HOME/.config/i3/config 2> /dev/null
+    ln -sb $(pwd)/i3/i3blocks.conf /etc/i3blocks.conf 2> /dev/null
+    ln -sb $(pwd)/tmux/tmux.conf $HOME/.tmux.confg 2> /dev/null
 
+    # reload Xresources
+    xrdb ~/.Xresources
 }
 
 main () {
@@ -133,8 +135,8 @@ main () {
     check_conn
     update_pm
     create_folder_struct
-    parse_progs
     link_dots
+    parse_progs
 
     # more settings
     setxkbmap us        # keyboard layout - just in case
@@ -144,5 +146,4 @@ main () {
 
 # run installer
 main
-
 

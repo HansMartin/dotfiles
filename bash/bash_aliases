@@ -25,6 +25,12 @@ alias find='fd -H'
 # cat on wings
 alias cat='bat --theme zenburn'
 
+# source: github.com/sharkdp/hexyl
+alias hex=hexyl
+
+# never vi
+alias vi=vim
+
 # show open ports
 alias ports='netstat -tulanp'
 alias netstat='netstat -tulanp'

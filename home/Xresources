@@ -6,8 +6,8 @@ URxvt.cursorUnderline: false
 URxvt.internalBorder: 10
 
 ! Fonts
-URxvt.font:     xft:bitstream vera sans mono:size=14:antialias=true
-URxvt.boldFont: xft:bitstream vera sans mono:bold:size=14:antialias=true
+URxvt.font:     xft:bitstream vera sans mono:size=11:antialias=true
+URxvt.boldFont: xft:bitstream vera sans mono:bold:size=12:antialias=true
 
 
 ! Clickable URLs

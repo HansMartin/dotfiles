@@ -1,6 +1,7 @@
-" +-------------------------+ "
-" |     VIM Config File     |
-" +-------------------------+ "
+"      _
+"  _ _|_|_____ ___ ___
+" | | | |     |  _|  _|
+"  \_/|_|_|_|_|_| |___|
 
 
 " Menu:
@@ -18,13 +19,14 @@
 " -----[ PLUGINS ]----- "
 
 call plug#begin('~/.vim/plugged')
-   Plug 'chriskempson/base16-vim'                          " Best Colors Ever!
+    Plug 'chriskempson/base16-vim'                          " Best Colors Ever!
     Plug 'tpope/vim-surround'                               " surround keybindings
     Plug 'junegunn/seoul256.vim'                            " seoul colorscheme
     Plug 'ctrlpvim/ctrlp.vim'                               " fuzzy finder for files/buffers ..
     Plug 'ervandew/supertab'                                " tabcompletion
     Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }  " latex compile and preview
     Plug 'junegunn/goyo.vim'                                " Goyo, distraction free writing for LaTeX
+    Plug 'HansMartin/inline-python'                         " Inline Python exec.
 call plug#end()
 
 
@@ -70,6 +72,8 @@ set incsearch               " search if you type the letters
 set path+=**                " include all subdirs for finding files (eg. :find)
 set backspace=2
 
+set splitbelow splitright   " split windows occure on the right/bottom
+
 
 " -----[ Remappings ]----- "
 
@@ -81,15 +85,24 @@ noremap <leader>s :bn!<CR>
 vmap < <gv
 vmap > >gv
 
+" Map the Python Evaluation into the vim-expression command(Q)
+nnoremap Q :EvalPython <CR>
+let g:il_append=1
+let g:il_use_nextline=0
+
 " Remove Trailling Whitespaces
 autocmd BufWritePre * :%s/\s\+$//e
 
-" use Ctr+C & Ctr+V for Copy Pastarino
-vnoremap <C-c> "+ty
-map <C-p> "+p
+" auto execute xrdb when .Xresources is saved
+autocmd BufWritePost ~/.Xresources !xrdb %
+
+
+" use Ctr+C for Copy Pasterino into sys. clipboard
+vnoremap <C-c> "+y
+nnoremap <leader>c "+yy
 
 " LaTeX Settings
-" let g:livepreview_previewer = 'mupdf'
+let g:livepreview_previewer = 'zathura'
 
 
 " Bind Goyo to shortcut
@@ -100,7 +113,7 @@ let g:goyo_width=100
 let g:goyo_height=100
 
 
-" --- LaTeX Mappings ---
+" --- LaTeX Mappings --- | stolen from Luke Smith's vimrc "
 
 " Navigating with guides
 autocmd FileType tex inoremap <Space><Tab> <Esc>/<++><Enter>"_c4l
@@ -158,8 +171,7 @@ set laststatus=2
 " -----[ Fonts ]----- "
 if has("gui_running")
     if has("gui_gtk2")
-        set guifont=Hack\ 9
-    elseif has("gui_macvim")
+        set guifont=Hack\ 9 elseif has("gui_macvim")
         set guifont=Menlo\ Regular:h14
     elseif has("gui_win32")
         set guifont=Hack:h9:cANSI,Consolas:h11:cANSI
@@ -195,30 +207,3 @@ if has("win32")
     behave mswin
 endif
 
-
-" -----[ Python inline evaluation ]-----
-
-python3 << EOL
-import vim
-# Do not say 'from vim import *' because that
-# will delete builtin function eval.
-
-def EvaluateCurrentLine(*args):
-  cur_str = vim.current.line
-  action, symb = None, None
-  for i in args:
-    if i in ["r","p"]: action = i
-    else: symb = i
-  try: start = cur_str.rindex(symb)+len(symb)
-  except: start = 0
-  result = eval(cur_str[start:],globals())
-  if action == "r":
-    vim.current.line = cur_str[:start]+str(result)
-  else:
-    print(result)
-EOL
-command -narg=* PyEv python3 EvaluateCurrentLine(<f-args>)
-
-
-" Map the Python Evaluation into a leader command
-nnoremap Q :PyEv r<CR>
