@@ -274,4 +274,4 @@ for_window [title="ranger"] floating enable
 # settings the wallpaper
 exec_always feh --bg-fill $HOME/pictures/wallpaper/train.jpg
 exec xautolock -locker ~/scripts/lock.sh -time 15
-exec setxkbmap us
+exec setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl # us-international kb layout

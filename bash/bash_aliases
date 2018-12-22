@@ -25,6 +25,7 @@ alias find='fd -H'
 # cat on wings
 alias cat='bat --theme zenburn'
 
+alias pdf=zathura
 # source: github.com/sharkdp/hexyl
 alias hex=hexyl
 
