@@ -6,6 +6,9 @@ package_man="apt "
 
 git_path="$HOME/documents/tools"
 
+files='.bashrc .vimrc .bash_aliases .Xresources .radare2rc .tmux.conf'
+folders='.config .scripts .vim'
+
 
 install_git_pck () {
 
@@ -31,37 +34,34 @@ create_folder_struct () {
     mkdir -p $HOME/documents/tools
     mkdir -p $HOME/documents/pkgs
     mkdir -p $HOME/documents/golang
-    mkdir -p $HOME/pictures
-    mkdir -p $HOME/.config/i3
 
-    # add vim folders
-    mkdir -p $HOME/.vim/autoload
-    mkdir -p $HOME/.vim/backups
-    mkdir -p $HOME/.vim/undo
 
     # vim plugin manager
-    p=$HOME/.vim/autoload/plug.vim
-    [ ! -f $p ] && cp $(pwd)/vim/autoload/plug.vim $p
+    p=$HOME/.vim/
+    [ ! -d $p ] && cp -r $(pwd)/home/.vim/ $HOME
+
+    # .config
+    p=$HOME/.config/
+    [ ! -d $p ] && cp -r $(pwd)/home/.config/ $HOME
 
     # wallpaper
-    p=$HOME/pictures/wallpaper
-    [ ! -d $p ] && cp -r $(pwd)/wallpaper $p
+    p=$HOME/pictures/
+    [ ! -d $p ] && cp -r $(pwd)/home/pictures/  $HOME
 
     # scrips folder
-    p=$HOME/scripts
-    [ ! -d $p ] && cp -r $(pwd)/scripts $p
+    p=$HOME/.scripts
+    [ ! -d $p ] && cp -r $(pwd)/home/.scripts $HOME
 
     # urxvt extension folder
-    mkdir -p $HOME/.urxvt/ext
+    # mkdir -p $HOME/.urxvt/ext ~ currently not needed, using  st
 
     # download font-size extension
-    p=$HOME/.urxvt/ext/font-size
-    [ ! -f $p ] && wget https://raw.githubusercontent.com/majutsushi/urxvt-font-size/master/font-size -O $p
+    #p=$HOME/.urxvt/ext/font-size
+    #[ ! -f $p ] && wget https://raw.githubusercontent.com/majutsushi/urxvt-font-size/master/font-size -O $p
 
     echo "[+] Created Folder Structure"
 
 }
-
 
 
 parse_progs () {
@@ -115,28 +115,52 @@ update_pm() {
 }
 
 
-# link all dotfiles to the home folder
-link_dots () {
-    echo "[*] linking dots.."
-    ln -sb $(pwd)/bash/bashrc $HOME/.bashrc 2> /dev/null
-    ln -sb $(pwd)/bash/bash_aliases $HOME/.bash_aliases 2> /dev/null
-    ln -sb $(pwd)/vim/vimrc $HOME/.vimrc 2> /dev/null
-    ln -sb $(pwd)/home/Xresources $HOME/.Xresources 2> /dev/null
-    ln -sb $(pwd)/i3/config $HOME/.config/i3/config 2> /dev/null
-    ln -sb $(pwd)/i3/i3blocks.conf /etc/i3blocks.conf 2> /dev/null
-    ln -sb $(pwd)/tmux/tmux.conf $HOME/.tmux.confg 2> /dev/null
+make_backup() {
+    # create a dir for all backup files
+    mkdir $HOME/.backupdots
+    echo "[*] Backing up dotfiles"
 
-    # reload Xresources
+    # backup all files
+    for f in $files;
+    do
+        cp $HOME/$f $HOME/.backupdots/
+    done
+
+    # backup all directories
+    for d in $folders;
+    do
+        cp -r $HOME/$d $HOME/.backupdots
+    done
+
+}
+
+copy_dots() {
+    echo "[*] copy new dotfiles"
+
+    # copy files
+    for f in $files;
+    do
+        echo "[*] copy file: $f"
+        rm $HOME/$f
+        cp $(pwd)/home/$f $HOME/$f
+    done
+
+    # backup all directories
+    rsync --recursive $(pwd)/home/.scripts $HOME/
+    rsync --recursive $(pwd)/home/pictures $HOME/
+    rsync --recursive $(pwd)/home/.config/* $HOME/.config
     xrdb ~/.Xresources
 }
+
 
 main () {
 
     check_conn
-    update_pm
+    #update_pm
     create_folder_struct
-    link_dots
-    parse_progs
+    make_backup
+    #copy_dots
+    #parse_progs
 
     # more settings
     setxkbmap us        # keyboard layout - just in case
