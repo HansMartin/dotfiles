@@ -1,0 +1,66 @@
+#!/bin/sh
+# changes the color of i3-gaps and the terminal
+# needs: $HOME/.scripts/color/i3
+# needs: $HOME/.scripts/color/shell
+
+# usage: colorchanger <base16_color>
+# uses base16_tomorrow-night as default color when run without argument
+
+# to work in new terminal sessions:
+# Put the following snippet in .bashrc
+# ------------------------------------
+#   if [ -f $HOME/.base16_theme ]; then
+#       eval $HOME/.base16_theme
+#   fi
+# ------------------------------------
+
+change_rofi() {
+    rb_path=$HOME/.scripts/colors/rofi
+    rasi="$rb_path/$base16_color.rasi"
+    if [ -f $rasi ]; then
+        rm -f "$rb_path/default.rasi"
+        ln -s $rasi "$rb_path/default.rasi"
+    fi
+
+}
+
+
+change_i3 () {
+    bi3_dir=$HOME/.scripts/colors/i3
+    xr="$bi3_dir/$base16_color.Xresources"
+
+    if [ -f $xr ]; then
+        xrdb -override "$xr"
+        i3-msg reload -q
+    fi
+}
+
+change_shell () {
+    bs_dir=$HOME/.scripts/colors/shell
+    script="$bs_dir/$base16_color.sh"
+
+    if [ -f $script ]; then
+        eval $script
+        rm -f $HOME/.base16_theme
+        ln -s $script $HOME/.base16_theme
+    fi
+}
+
+
+
+main (){
+    change_i3
+    change_shell
+    change_rofi
+}
+
+
+if [ "$#" != "1" ]; then
+    echo "[*] Settings default color."
+    base16_color="base16_tomorrow-night"
+else
+    echo "[*] Settings colorscheme to $1."
+    base16_color=$1
+fi
+
+main

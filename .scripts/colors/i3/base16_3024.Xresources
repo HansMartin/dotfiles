@@ -1,0 +1,45 @@
+! Base16 3024
+! Scheme: Jan T. Sott (http://github.com/idleberg)
+
+#define b00 #090300
+#define b01 #3a3432
+#define b02 #4a4543
+#define b03 #5c5855
+#define b04 #807d7c
+#define b05 #a5a2a2
+#define b06 #d6d5d4
+#define b07 #f7f7f7
+#define b08 #db2d20
+#define b09 #e8bbd0
+#define b0A #fded02
+#define b0B #01a252
+#define b0C #b5e4f4
+#define b0D #01a0e4
+#define b0E #a16a94
+#define b0F #cdab53
+
+*foreground:   b05
+#ifdef background_opacity
+*background:   [background_opacity]b00
+#else
+*background:   b00
+#endif
+*cursorColor:  b05
+
+*color0:       b00
+*color1:       b08
+*color2:       b0B
+*color3:       b0A
+*color4:       b0D
+*color5:       b0E
+*color6:       b0C
+*color7:       b05
+
+*color8:       b03
+*color9:       b09
+*color10:      b01
+*color11:      b02
+*color12:      b04
+*color13:      b06
+*color14:      b0F
+*color15:      b07

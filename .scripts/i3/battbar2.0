@@ -1,0 +1,13 @@
+bat=$(acpi battery | awk '{print $4}' | sed "s/%//")
+
+
+if [ $bat -gt 0 ] && [ $bat -lt 25 ]; then
+    echo 'yeah'
+elif [ $bat -gt 25 ] && [ $bat -lt 50 ]; then
+
+elif [ $bat -gt 50 ] && [ $bat -lt 75 ]; then
+
+elif [ $bat -gt 75 ] && [ $bat -lt 100 ]; then
+
+fi
+
