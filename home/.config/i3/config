@@ -21,7 +21,7 @@ set $mod Mod1
 set $win Mod4
 
 # Terminal
-set $terminal "urxvt"
+set $terminal "st"
 
 set $file_browser "urxvt -title ranger -e /bin/bash -ic ranger"
 
