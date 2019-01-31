@@ -1,13 +1,12 @@
 #!/bin/bash
 # Installation script...
 
-inst_void="vpm "
-package_man="apt "
+package_man="pacman"
 
 git_path="$HOME/documents/tools"
 
 files='.bashrc .vimrc .bash_aliases .Xresources .radare2rc .tmux.conf'
-folders='.config .scripts .vim'
+folders='.config .scripts .vim .pandoc'
 
 
 install_git_pck () {
@@ -40,9 +39,6 @@ create_folder_struct () {
     p=$HOME/.vim/
     [ ! -d $p ] && cp -r $(pwd)/home/.vim/ $HOME
 
-    # .config
-    p=$HOME/.config/
-    [ ! -d $p ] && cp -r $(pwd)/home/.config/ $HOME
 
     # wallpaper
     p=$HOME/pictures/
@@ -145,7 +141,6 @@ copy_dots() {
         cp $(pwd)/home/$f $HOME/$f
     done
 
-    # backup all directories
     rsync --recursive $(pwd)/home/.scripts $HOME/
     rsync --recursive $(pwd)/home/pictures $HOME/
     rsync --recursive $(pwd)/home/.config/* $HOME/.config
@@ -156,14 +151,11 @@ copy_dots() {
 main () {
 
     check_conn
-    #update_pm
     create_folder_struct
-    make_backup
-    #copy_dots
-    #parse_progs
 
-    # more settings
-    setxkbmap us        # keyboard layout - just in case
+    make_backup
+    copy_dots
+
 
 }
 

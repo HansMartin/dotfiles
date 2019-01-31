@@ -34,8 +34,9 @@ call plug#end()
 " -----[ BASICS ]----- "
 
 " Color Settings
-let base16colorspace=256
-set t_Co=256
+"let base16colorspace=256
+"set t_Co=256
+"colorscheme base16-dracula
 colorscheme base16-tomorrow-night
 
 " Encoding
@@ -114,7 +115,12 @@ let g:goyo_width=100
 let g:goyo_height=100
 
 
-" --- LaTeX Mappings --- | stolen from Luke Smith's vimrc "
+" Markdown viewer script
+map <F9> <ESC>:silent !md-viewer % <CR>
+
+
+" --- LaTeX Mappings ---
+"     stolen from Luke Smith's vimrc "
 
 " Navigating with guides
 autocmd FileType tex inoremap <Space><Tab> <Esc>/<++><Enter>"_c4l

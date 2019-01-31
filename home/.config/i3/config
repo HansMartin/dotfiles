@@ -23,13 +23,14 @@ set $win Mod4
 # Terminal
 set $terminal "st"
 
-set $file_browser "urxvt -title ranger -e /bin/bash -ic ranger"
+# File Browser
+set $file_browser "st -n vifm -e /bin/bash -ic vifm"
 
 # Font (window title, bar)
 font pango:monospace 8
 
 
-# -----[ Gaps<3 and Borders ]----- #
+# -----[ Gaps and Borders ]----- #
 
 # Inner Gapsize (in px)
 gaps inner 20
@@ -41,9 +42,9 @@ new_window pixel 1
 
 
 # -----[ Colors ]----- #
-#TODO get some fancy color script
 
 # load color configuration from Xresource file
+# colors can be changed with .scripts/tools/colorchanger, based on all base16 colors
 
 set_from_resource $foreground foreground #292d3e
 set_from_resource $background background #292d3e
@@ -72,28 +73,33 @@ set_from_resource $base0F color14 #ff5370
 bindsym XF86MonBrightnessUp exec xbacklight +10
 bindsym XF86MonBrightnessDown exec xbacklight -10
 
-# Audio Keys
-bindsym $mod+plus		exec --no-startup-id amixer sset Master 5%+
-bindsym $mod+Shift+plus		exec --no-startup-id amixer sset Master 15%+
-bindsym $mod+minus 		exec --no-startup-id amixer sset Master 5%-
-bindsym $mod+Shift+minus	exec --no-startup-id amixer sset Master 15%-
+# Audio Keys - Volume and Mute
+bindsym $mod+plus		exec --no-startup-id amixer -D pulse sset Master 5%+
+bindsym $mod+Shift+plus		exec --no-startup-id amixer -D pulse sset Master 15%+
+bindsym $mod+minus 		exec --no-startup-id amixer -D pulse sset Master 5%-
+bindsym $mod+Shift+minus	exec --no-startup-id amixer -D pulse sset Master 15%-
 
-bindsym XF86AudioRaiseVolume    exec amixer sset Master 5%+
-bindsym XF86AudioLowerVolume    exec amixer sset Master 5%-
-bindsym XF86AudioMute           exec amixer sset Master toggle
+bindsym XF86AudioRaiseVolume    exec --no-startup-id amixer -D pulse sset Master 5%+
+bindsym XF86AudioLowerVolume    exec --no-startup-id amixer -D pulse sset Master 5%-
+bindsym XF86AudioMute           exec --no-startup-id amixer -D pulse sset Master toggle
 
-bindsym XF86AudioPrev exec nop
-bindsym XF86AudioPlay exec nop
-bindsym XF86AudioNext exec nop
+# Spotify Control Scripts
+bindsym XF86AudioPrev exec --no-startup-id $HOME/.scripts/tools/spotify-ctrl Previous
+bindsym XF86AudioPlay exec --no-startup-id $HOME/.scripts/tools/spotify-ctrl Play
+bindsym XF86AudioNext exec --no-startup-id $HOME/.scripts/tools/spotify-ctrl Next
 
-bindsym Print                   exec scrot -s -e 'mv $f ~/pictures/screenshots/'
+# Screenshot script
+bindsym Print --release exec --no-startup-id $HOME/.scripts/tools/mkscreenshot.sh
+
+# this spawns in scratchpad mode!
+set $dropdownterm "st -n ddpython -e /bin/bash -ic python2"
+bindsym $mod+p exec $dropdownterm
 
 
-set $dropdownterm "urxvt -title dropdowncalc -e /bin/bash -ic python"
+# watching (yt-) vids with mpv
+bindsym $mod+y exec $HOME/.scripts/misc/music-playlist.sh
 
-bindsym $mod+a exec $dropdownterm
-
-
+# Locking the screen
 bindsym $win+l exec $HOME/.scripts/i3/lock.sh # lock screen
 
 # Use Mouse+$mod to drag floating windows to their wanted position
@@ -108,11 +114,13 @@ bindsym $mod+q kill
 # Scratchpad bindings
 # make a terminal a scratchpad window
 bindsym $mod+t move scratchpad
+
 # show scratchpad
 bindsym $mod+s scratchpad show
 
 # Program launcher and Window switcher
-bindsym $mod+d exec rofi -show run -theme $HOME/.scripts/colors/rofi/default
+bindsym $mod+d exec bash -c "rofi -show run -theme $HOME/.scripts/colors/rofi/default"
+#bindsym $mod+d exec dmenu_run
 bindsym $mod+Tab exec rofi -show window -theme $HOME/.scripts/colors/rofi/default
 
 # Use win+e as filemanager shortcut (using ranger)
@@ -217,11 +225,11 @@ set $ws9  "9"
 set $ws10 "10"
 
 # switch to workspace
-bindsym $mod+1 workspace $ws1
+bindsym $mod+1 workspace $ws1;move workspace to output primary;
 bindsym $mod+2 workspace $ws2
 bindsym $mod+3 workspace $ws3
 bindsym $mod+4 workspace $ws4
-bindsym $mod+5 workspace $ws5
+bindsym $mod+5 workspace $ws5;move workspace to output DP2-3;
 bindsym $mod+6 workspace $ws6
 bindsym $mod+7 workspace $ws7
 bindsym $mod+8 workspace $ws8
@@ -247,9 +255,13 @@ bindsym $mod+Shift+0 move container to workspace 10
 # Start i3bar to display a workspace bar (plus the system information from i3status)
 bar {
         # default status string
-	status_command i3blocks -c /etc/i3blocks.conf
+#	status_command i3blocks -c /etc/i3blocks.conf
+        i3bar_command i3bar
+        status_command i3status
+
 	position top
         tray_output primary
+        strip_workspace_numbers yes
 
         # Base16 colors
 	colors {
@@ -278,18 +290,28 @@ bar {
 
 # -----[ Windows ]----- #
 
-for_window [title="ranger"] floating enable
+# Settings for the drop-drown python instance
 
-for_window [title="dropdowncalc"] floating enable
-for_window [title="dropdowncalc"] resize set 800 300
-for_window [title="dropdowncalc"] move scratchpad
-for_window [title="dropdowncalc"] border pixel 2
-for_window [title="dropdowncalc"] sticky enable
+for_window [instance="ddpython"]        floating enable
+for_window [instance="ddpython"]        resize set 1000 400
+for_window [instance="ddpython"]        move scratchpad
+for_window [instance="ddpython"]        border pixel 3
+for_window [instance="ddpython"]        sticky enable
+for_window [instance="ddpython"]        scratchpad show
+
+# move them to seperate workspaces
+assign [instance="telegram"]            9
+assign [instance="spotify"]             8
+
 
 # -----[ Runtime ]----- #
 
-# settings the wallpaper
-exec_always feh --bg-fill $HOME/pictures/wallpaper/train.jpg
-exec xautolock -locker ~/.scripts/i3/lock.sh -time 15
-exec_always setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl # us-international kb layout
-exec redshift
+exec         --no-startup-id redshift-gtk                                                               # no bluelight
+exec         --no-startup-id $HOME/.scripts/misc/multimonitor.sh                                        # script for multi monitor
+exec         --no-startup-id $HOME/.scripts/tools/colorchanger base16_gruvbox-dark-pale                 # colorscheme
+exec         --no-startup-id nm-applet                                                                  # network manager applet
+exec         --no-startup-id volumeicon                                                                 # i need music! ~ applet for audio
+exec         --no-startup-id xfce4-power-manager                                                        # display power settings
+exec         --no-startup-id compton -b                                                                 # Transparency
+exec_always  --no-startup-id feh --bg-fill $HOME/pictures/wallpaper/wall.jpg
+exec_always  --no-startup-id setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl         # us-international kb layout

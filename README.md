@@ -7,10 +7,6 @@ Use the progs.csv file as source for packages, github repos, github .deb files (
 
 __Format:__
 
-[p|d|g],[pkg name|repo|deb path]
-
-
-Adjust the symlinks in the installer script and run the installer.
 ```sh
 ./install.sh
 ```
@@ -20,22 +16,25 @@ This copies every file in the right place and installs all the specified package
 
 ### Tools
 * WM: i3-gaps
-* Terminal: urxvt
+* Terminal: st
 * Editor: vim
-* File Browser: ranger
+* File Browser: vifm
 * PDF Viewer: zathura
-* Images: feh
+* Images: sxiv
 
 
 ### More random tools
 * i3blocks
 * htop
+* scrot
+* surf
+* dmenu
 * bat
+* compton
 * fd
+* dunst
+* redshift
 * ripgrep
-* xautolock
 * xbacklight
 * rofi
 * tmux
-* neofetch
-* scrot

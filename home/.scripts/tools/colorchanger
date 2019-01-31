@@ -35,6 +35,15 @@ change_i3 () {
     fi
 }
 
+change_xres () {
+    xdir=$HOME/.scripts/colors/xresources
+    xr="$xdir/$base16_color-256.Xresources"
+
+    if [ -f $xr ]; then
+        xrdb -override "$xr"
+    fi
+}
+
 change_shell () {
     bs_dir=$HOME/.scripts/colors/shell
     script="$bs_dir/$base16_color.sh"
@@ -50,7 +59,8 @@ change_shell () {
 
 main (){
     change_i3
-    change_shell
+#    change_shell
+    #change_xres
     change_rofi
 }
 

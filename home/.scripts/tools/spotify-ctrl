@@ -1,0 +1,10 @@
+#!/bin/sh
+# Utility to control spotify via dbus ~ mainly used as script for i3 key-bindings
+
+if [ ${#1} -le 0 ]
+then
+     echo '[-] No Arguments'
+     exit 1
+fi
+
+dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.$(echo $1 | sed 's/Play/PlayPause/') 2> /dev/null

@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Argument Check
+if [ ${#1} -le 0 ]
+then
+    echo '[-] No Arguments'
+    exit 1
+fi
+
+# generate tmp file name
+tmp=$(mktemp)
+echo $tmp
+# encoding arg[1] as qrcode and save output (PNG) in tmp_file
+qrencode -t PNG -o $tmp "$1"
+
+# send qr-code to the notifications
+notify-send -i $tmp "$1"
+
+# remove tmp-file
+#rm $tmp

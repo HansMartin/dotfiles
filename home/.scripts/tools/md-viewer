@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Simple Markdown Viewer for example for vim.
+# Uses the suckless browser surf and pandoc for md->html convertion
+# Uses the Github-Markdown css
+
+if [ ${#1} -le 0 ]; then
+    exit 1
+fi
+
+mdfile=$1
+
+pandoc --template github $mdfile -o /tmp/out.html > /dev/null
+
+if [ $? -eq 0 ] ; then
+    surf /tmp/out.html
+fi
