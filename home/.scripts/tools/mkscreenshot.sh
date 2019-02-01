@@ -5,13 +5,21 @@ tmpss="/tmp/tmp_mkscreenshot.png"
 
 choice=$(printf "Select\nFull Screen\nActive Window" | dmenu -i)
 
+
 save_screenshot () {
+    # copy screenshot as image to clipboard (pasting in Telegram, ...)
+    xclip -t image/png -selection clipboard -i < "$tmpss"
+
     name=$(echo '' | dmenu -p "Enter Name:")
+
+    if [ "$name" = "" ]; then
+        echo '[-] Aborting...'
+        exit 0
+    fi
+
     mv "$tmpss" "$sspath/$name.png"
     notify-send "screenshot has been saved in ~/pictures/screenshots"
 
-    # copy screenshot as image to clipboard (pasting in Telegram, ...)
-    xclip -t image/png -selection clipboard -i < "$sspath/$name.png"
 }
 
 # Choice between Full Screen, Active Window and Selection
